@@ -1,16 +1,21 @@
 # main.py
-
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from src.logging_setup import setup_logging
+
+# Set up logging
+logger = setup_logging()
 
 # Create FastAPI app
 app = FastAPI()
+
 
 # Define request body model
 class CalculationRequest(BaseModel):
     num1: float
     num2: float
     operation: str
+
 
 # Define routes
 @app.get("/")
@@ -25,19 +30,26 @@ def calculate(request: CalculationRequest):
     operation = request.operation.lower()
 
     if operation == "add":
+        logger.info("Add operation")
         result = num1 + num2
     elif operation == "subtract":
+        logger.info("Subtract operation")
         result = num1 - num2
     elif operation == "multiply":
+        logger.info("Multiply operation")
         result = num1 * num2
     elif operation == "divide":
         if num2 == 0:
+            logger.warning("User error - divide by zero")
             raise HTTPException(status_code=400, detail="Division by zero is not allowed")
+        logger.info("Divide operation")
         result = num1 / num2
     else:
+        logger.warning("User error - Invalid operation")
         raise HTTPException(status_code=400, detail="Invalid operation. Supported operations: add, subtract, multiply, divide")
 
     return {"result": result}
+
 
 if __name__ == "__main__":
     import uvicorn
