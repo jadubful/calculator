@@ -51,7 +51,7 @@ jobs:
       run: |
         echo "run pytest in calculator using the pytest.ini in that directory"
         source venv/bin/activate  # Activate virtual environment
-        pytest --ini=pytest.ini  # Run pytest with the specified ini file
+        python -m pytest  # Run pytest with the specified ini file
         echo "directory = "        
         pwd
         ls -l
