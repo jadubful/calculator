@@ -48,7 +48,7 @@ jobs:
     - name: Run tests with coverage
       run: |
         echo "run pytest in calculator using the pytest.ini in that directory"
-        python -m pytest -c pytest.ini .
+        python -m pytest .
         echo "directory = "        
         pwd
         ls -l
