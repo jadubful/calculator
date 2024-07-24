@@ -1,0 +1,57 @@
+name: Calculator App CI/CD
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - feature-*
+      - release-*
+  pull_request:
+    branches:
+      - master
+      - develop
+      - feature-*
+      - release-*
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Disable shallow clone
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Set up PYTHONPATH
+      run: echo "PYTHONPATH=$PYTHONPATH:$ (pwd)/src" >> $GITHUB_ENV
+
+    - name: Create directories
+      run: |
+        echo "directory = "        
+        pwd
+        mkdir -p tests/test_reports
+        mkdir -p logs
+
+    - name: Run tests with coverage
+      run: |
+        echo "run pytest in calculator using the pytest.ini in that directory"
+        python -m pytest -c pytest.ini .
+        echo "directory = "        
+        pwd
+        ls -l
+        echo "directory = tests/test_reports"                
+        ls -l tests/test_reports
+

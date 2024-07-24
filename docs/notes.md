@@ -16,7 +16,7 @@ Markdown Guide: https://paperhive.org/help/markdown
 - class setup to allow 2 floats and a string (operation) to be passed to the `calculate` end point
 - built using `fastAPI` framework with `pedantic` for data validation
 - use `uvicorn` as an ASGI server (Asynchronous Server Gateway Interface) to serve the application. It handles asynchronous I/O, HTTP/2 websocket support
-- to run from command line: `uvicorn src.main:app --reload` (reload will automatically restart server when changes are made)
+- to run from command liuvicorn src.main:app --reload` (reload will automatically restart server when changes are made)
 - openAPI visible on `http://127.0.0.1:8000/docs`
 - to run curl from command line:
   - ```curl -Method POST -Uri http://127.0.0.1:8000/calculate -Headers @{'accept'='application/json'; 'Content-Type'='application/json'} -Body '{"num1": 5, "num2": 12, "operation": "multiply"}'```
