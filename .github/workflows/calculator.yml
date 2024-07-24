@@ -13,6 +13,7 @@ on:
       - develop
       - feature-*
       - release-*
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -37,7 +38,7 @@ jobs:
         pip install pytest  # Ensure pytest is installed
 
     - name: Set up PYTHONPATH
-      run: echo "PYTHONPATH=$PYTHONPATH:$ (pwd)/src" >> $GITHUB_ENV
+      run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/src" >> $GITHUB_ENV
 
     - name: Create directories
       run: |
@@ -49,10 +50,11 @@ jobs:
     - name: Run tests with coverage
       run: |
         echo "run pytest in calculator using the pytest.ini in that directory"
-        python -m pytest
+        source venv/bin/activate  # Activate virtual environment
+        cd calculator  # Change to the directory containing pytest.ini
+        pytest --ini=pytest.ini  # Run pytest with the specified ini file
         echo "directory = "        
         pwd
         ls -l
         echo "directory = tests/test_reports"                
         ls -l tests/test_reports
-
