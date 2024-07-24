@@ -46,7 +46,7 @@ def calculate(request: CalculationRequest):
         result = num1 / num2
     else:
         logger.warning("User error - Invalid operation")
-        raise HTTPException(status_code=400, detail="Invalid operation. Supported operations: add, subtract, multiply divide")
+        raise HTTPException(status_code=400, detail="Invalid operation. Supported operations: add, subtract, multiply, divide")
 
     return {"result": result}
 
